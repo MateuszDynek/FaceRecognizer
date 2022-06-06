@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,20 @@ namespace FaceRecognizer
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //Load sample data
+            var imageBytes = File.ReadAllBytes(@"C:\Users\m.dynek\Downloads\Bill Gates\424637.1.jpg");
+            MLModel1.ModelInput sampleData = new MLModel1.ModelInput()
+            {
+                ImageSource = imageBytes,
+            };
+
+            //Load model and predict output
+            var result = MLModel1.Predict(sampleData);
+
         }
     }
 }
