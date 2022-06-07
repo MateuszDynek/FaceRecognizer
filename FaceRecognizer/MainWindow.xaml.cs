@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,15 +30,37 @@ namespace FaceRecognizer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //Load sample data
-            var imageBytes = File.ReadAllBytes(@"C:\Users\m.dynek\Downloads\Bill Gates\424637.1.jpg");
-            MLModel1.ModelInput sampleData = new MLModel1.ModelInput()
+            
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
             {
-                ImageSource = imageBytes,
-            };
+                string directoryPath = System.IO.Path.GetDirectoryName(op.FileName);
+                var imageBytes = File.ReadAllBytes(op.FileName);
+                imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
+                MLModel1.ModelInput sampleData = new MLModel1.ModelInput()
+                {
+                    ImageSource = imageBytes,
+                };
 
-            //Load model and predict output
-            var result = MLModel1.Predict(sampleData);
+                //Load model and predict output
+                var result = MLModel1.Predict(sampleData);
+                if(result.PredictedLabel == "Bill Gates")
+                {
+                    leeel.Text = result.PredictedLabel;
+                }
+                else
+                {
+                    leeel.Text = result.PredictedLabel;
+                }
+
+            }
 
         }
+
+        
     }
 }
