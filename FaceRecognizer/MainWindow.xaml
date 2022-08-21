@@ -78,6 +78,18 @@
                        Text=""
                        Margin="0,20,0,0"
                        Style="{StaticResource textblock_style}"/>
+            <TextBlock x:Name="leeel3" Grid.Row="2" Grid.Column="4"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom" 
+                       Text="Probability "
+                       Margin="0,20,0,0"
+                       Style="{StaticResource textblock_style}"/>
+            <TextBlock x:Name="leeel2" Grid.Row="3" Grid.Column="4"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top" 
+                       Text=""
+                       Margin="0,20,0,0"
+                       Style="{StaticResource textblock_style}"/>
             
             </Grid>
 

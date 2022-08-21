@@ -41,24 +41,39 @@ namespace FaceRecognizer
                 string directoryPath = System.IO.Path.GetDirectoryName(op.FileName);
                 var imageBytes = File.ReadAllBytes(op.FileName);
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
-                MLModel1.ModelInput sampleData = new MLModel1.ModelInput()
+                MLModel2.ModelInput sampleData = new MLModel2.ModelInput()
                 {
-                    ImageSource = imageBytes,
+                    ImageSource = op.FileName,
                 };
 
                 //Load model and predict output
-                var result = MLModel1.Predict(sampleData);
-                if(result.PredictedLabel == "Bill Gates")
+                var result = MLModel2.Predict(sampleData);
+                
+                if (result.Prediction == "Bill Gates")
                 {
-                    leeel.Text = result.PredictedLabel;
+                    leeel.Text = result.Prediction;
+                    leeel2.Text = CheckBiggestPossibility(result.Score);
                 }
                 else
                 {
-                    leeel.Text = result.PredictedLabel;
+                    leeel.Text = result.Prediction;
+                    leeel2.Text = CheckBiggestPossibility(result.Score);
                 }
 
             }
 
+        }
+        private string CheckBiggestPossibility(float[] scoreTab)
+        {
+            var biggestScore = 0f;
+            string biggestScoreS = "0";
+            for (int i = 0; i < scoreTab.Length; i++)
+            {
+                if(scoreTab[i] > biggestScore)
+                biggestScore = scoreTab[i];
+            }
+            biggestScoreS = (Math.Round(biggestScore, 2) * 100).ToString() + " %";
+            return biggestScoreS;
         }
 
         
